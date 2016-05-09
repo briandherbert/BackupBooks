@@ -18,30 +18,15 @@ import java.util.Map;
 public class EntriesActivity extends AppCompatActivity {
     public static final String TAG = EntriesActivity.class.getSimpleName();
 
-    static final String FIREBASE_ROOT = "https://crackling-fire-4753.firebaseio.com/";
-    static final String FIREBASE_REF_BOOKLIST = "backupbooks";
-
-    static final String CHILD_BOOK_DIRECTORY = "directory";
-    static final String CHILD_BOOKS = "books";
-
-    Firebase mFirebaseBooklistRef = new Firebase(FIREBASE_ROOT + FIREBASE_REF_BOOKLIST);
-
-    static final String TITLE_COVER_DELIMETER = "__";
-
-    private static final Map<String, String> FORBIDDEN_TO_REPLACEMENT = new HashMap<>();
-    static {
-        FORBIDDEN_TO_REPLACEMENT.put(".", "*DOT*");
-        FORBIDDEN_TO_REPLACEMENT.put("http://", "*HTTP*");
-        FORBIDDEN_TO_REPLACEMENT.put("/", "*SLASH*");
-    }
+    Firebase mFirebaseCatalogRef = new Firebase(Helper.FIREBASE_ROOT + Helper.FIREBASE_REF_BOOKS_APP);
 
     Button mBtnSubmit;
     TextView mLblInfo;
 
     // SUPER DUPER IMPORTANT
-    final Book.IBook book = new Book.ThomasAbc();
+    final Book.IBook book = null; //new Book.RockyAndRubble();
 
-    final String bookId = getBookId(book);
+    final String bookId = Helper.getBookId(book);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +43,7 @@ public class EntriesActivity extends AppCompatActivity {
             }
         });
 
-        mLblInfo.setText("Submitting book: " + book.getTitle() + "\nPages:\n" + book.getPages(Book.BookPageMediaType.image));
+        mLblInfo.setText("Submitting book: " + book.getTitle() + "\nPages: " + book.getPages(Book.BookPageMediaType.image).length);
     }
 
     /**
@@ -66,12 +51,10 @@ public class EntriesActivity extends AppCompatActivity {
      * info like page urls, text, and audio
      */
     public void submit() {
-        mFirebaseBooklistRef.addValueEventListener(new ValueEventListener() {
+        mFirebaseCatalogRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v(TAG, "successfully added new book");
-
-                Log.v(TAG, "data snapshot" + dataSnapshot.getValue());
+                Log.v(TAG, "successfully added new book\nData snapshot:" + dataSnapshot.getValue());
 
                 submitBookDetails();
             }
@@ -83,17 +66,15 @@ public class EntriesActivity extends AppCompatActivity {
         });
 
         Log.v(TAG, "Submitting book " + bookId);
-        mFirebaseBooklistRef.child(CHILD_BOOK_DIRECTORY).push().setValue(bookId);
+        mFirebaseCatalogRef.child(Helper.CHILD_BOOK_DIRECTORY).push().setValue(bookId);
     }
 
     public void submitBookDetails() {
-        Firebase bookDetailsRef = mFirebaseBooklistRef.child(CHILD_BOOKS).child(bookId);
+        Firebase bookDetailsRef = mFirebaseCatalogRef.child(Helper.CHILD_BOOKS).child(bookId);
         bookDetailsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v(TAG, "successfully added book details");
-
-                Log.v(TAG, "data snapshot" + dataSnapshot.getValue());
+                Log.v(TAG, "successfully added book details\nData snapshot: " + dataSnapshot.getValue());
             }
 
             @Override
@@ -116,13 +97,4 @@ public class EntriesActivity extends AppCompatActivity {
         }
     }
 
-    public static String getBookId(Book.IBook book) {
-        String bookId = book.getTitle() + TITLE_COVER_DELIMETER + book.getCoverUrl();
-
-        for (String forbidden : FORBIDDEN_TO_REPLACEMENT.keySet()) {
-            bookId = bookId.replace(forbidden, FORBIDDEN_TO_REPLACEMENT.get(forbidden));
-        }
-
-        return bookId;
-    }
 }
