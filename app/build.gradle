@@ -29,4 +29,16 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.5.2+'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    // Ion
+    compile 'com.koushikdutta.ion:ion:2.+'
+
+    // Glide
+    compile 'com.github.bumptech.glide:glide:3.6.1'
+    compile 'com.android.support:support-v4:23.1.1'
+
+    // Fresca
+    compile 'com.facebook.fresco:fresco:0.10.0'
+    compile 'com.facebook.fresco:animated-gif:0.10.0'
+
 }

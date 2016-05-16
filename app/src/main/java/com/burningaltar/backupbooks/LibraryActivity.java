@@ -5,67 +5,65 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by bherbert on 5/9/16.
  */
-public class LibraryActivity extends AppCompatActivity {
+public class LibraryActivity extends AppCompatActivity implements CoversAdapter.Listener, FirebaseHelper.LibraryFetcherListener {
     public static final String TAG = LibraryActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
 
     CoversAdapter mAdapter;
 
-    Firebase mFirebaseCatalogRef = new Firebase(Helper.FIREBASE_ROOT + Helper.FIREBASE_REF_BOOKS_APP);
+    ArrayList<String> mBookIds = new ArrayList<>();
+
+    static final int NUM_COLS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
-        mAdapter = new CoversAdapter(this);
+        mAdapter = new CoversAdapter(this, this, NUM_COLS);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_covers);
 
-        GridLayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return 1;
-            }
-        });
+        GridLayoutManager mLayoutManager = new GridLayoutManager(this, NUM_COLS);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        getDirectory();
+        if (Constants.FETCH_FROM_FIREBASE) {
+            FirebaseHelper.fetchBookIds(this);
+        } else {
+            for (Library.IBook book : Library.BOOKS) {
+                mBookIds.add(Library.getBookId(book));
+            }
+
+            onGotBookIds(mBookIds);
+        }
     }
 
-    public void getDirectory() {
-        Log.v(TAG, "Get all books");
-        mFirebaseCatalogRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v(TAG, "Books list:\nData snapshot:" + dataSnapshot.getValue() + " type " + dataSnapshot.getValue().getClass());
-                HashMap<String, HashMap<String, String>> map = (HashMap) dataSnapshot.getValue();
+    @Override
+    public void onItemClicked(View v) {
+        int idx = mRecyclerView.getChildLayoutPosition(v);
+        Log.v(TAG, "clicked " + mBookIds.get(idx));
+        startActivity(BookActivity.createIntent(this, mBookIds.get(idx)));
+    }
 
-                Log.v(TAG, "has directory " + map.get(Helper.CHILD_BOOK_DIRECTORY));
-
-                HashMap<String, String> bookIdsMap = map.get(Helper.CHILD_BOOK_DIRECTORY);
-                mAdapter.add(bookIdsMap.values());
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                Log.v(TAG, "failed to add new book");
-            }
-        });
+    @Override
+    public void onGotBookIds(Collection<String> bookIds) {
+        mBookIds.addAll(bookIds);
+        mAdapter.add(mBookIds);
     }
 }

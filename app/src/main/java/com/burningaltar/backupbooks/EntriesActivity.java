@@ -18,15 +18,15 @@ import java.util.Map;
 public class EntriesActivity extends AppCompatActivity {
     public static final String TAG = EntriesActivity.class.getSimpleName();
 
-    Firebase mFirebaseCatalogRef = new Firebase(Helper.FIREBASE_ROOT + Helper.FIREBASE_REF_BOOKS_APP);
+    Firebase mFirebaseCatalogRef = new Firebase(FirebaseHelper.FIREBASE_ROOT + FirebaseHelper.FIREBASE_REF_BOOKS_APP);
 
     Button mBtnSubmit;
     TextView mLblInfo;
 
     // SUPER DUPER IMPORTANT
-    final Book.IBook book = null; //new Book.RockyAndRubble();
+    final Library.IBook book = null; //new Book.PajamaTime();
 
-    final String bookId = Helper.getBookId(book);
+    final String bookId = Library.getBookId(book);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class EntriesActivity extends AppCompatActivity {
             }
         });
 
-        mLblInfo.setText("Submitting book: " + book.getTitle() + "\nPages: " + book.getPages(Book.BookPageMediaType.image).length);
+        mLblInfo.setText("Submitting book: " + book.getTitle() + "\nPages: " + book.getPages(Library.BookPageMediaType.image).length);
     }
 
     /**
@@ -66,11 +66,11 @@ public class EntriesActivity extends AppCompatActivity {
         });
 
         Log.v(TAG, "Submitting book " + bookId);
-        mFirebaseCatalogRef.child(Helper.CHILD_BOOK_DIRECTORY).push().setValue(bookId);
+        mFirebaseCatalogRef.child(FirebaseHelper.CHILD_BOOK_DIRECTORY).push().setValue(bookId);
     }
 
     public void submitBookDetails() {
-        Firebase bookDetailsRef = mFirebaseCatalogRef.child(Helper.CHILD_BOOKS).child(bookId);
+        Firebase bookDetailsRef = mFirebaseCatalogRef.child(FirebaseHelper.CHILD_BOOKS).child(bookId);
         bookDetailsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -83,7 +83,9 @@ public class EntriesActivity extends AppCompatActivity {
             }
         });
 
-        for (Book.BookPageMediaType mediaType : Book.BookPageMediaType.values()) {
+        bookDetailsRef.child(FirebaseHelper.CHILD_AUTHOR).setValue(book.getAuthor());
+
+        for (Library.BookPageMediaType mediaType : Library.BookPageMediaType.values()) {
             String[] values = book.getPages(mediaType);
 
             if (values != null && values.length > 0) {
