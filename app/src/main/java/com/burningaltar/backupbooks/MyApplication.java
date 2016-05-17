@@ -12,5 +12,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Firebase.setAndroidContext(this);
+
+        ImageLoaderLib.init(this);
     }
 }

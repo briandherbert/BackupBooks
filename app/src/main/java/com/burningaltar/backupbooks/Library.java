@@ -46,7 +46,10 @@ public class Library {
             new PajamaTime(),
             new HowDoDinosaursCountToTen(),
             new APorcupineNamedFluffy(),
-            new HandHandFingersThumb()
+            new HandHandFingersThumb(),
+            new MarshallAndSkye(),
+            new PawPatrolRescueTeam(),
+            new ThomasGoTrainGo()
     };
 
     public static IBook getBook(String bookId) {
@@ -71,6 +74,87 @@ public class Library {
         String[] getPages(BookPageMediaType mediaType);
 
         String getAuthor();
+    }
+
+    public static class ThomasGoTrainGo implements IBook {
+        @Override
+        public String getTitle() {
+            return "Thomas' Go, Train, Go!";
+        }
+
+        @Override
+        public String getCoverUrl() {
+            return "http://i.imgur.com/UoBfRsP.jpg";
+        }
+
+        @Override
+        public String[] getPages(BookPageMediaType mediaType) {
+            switch (mediaType) {
+                case image:
+                    return new String[]{
+                            "http://i.imgur.com/1Lv6T90.jpg",   // 0
+                            "http://i.imgur.com/fZbsfU5.jpg",   // 1
+                            "http://i.imgur.com/jFNEwXg.jpg",   // 2
+                            "http://i.imgur.com/hiJuQyX.jpg",   // 3
+                            "http://i.imgur.com/yOwFj8z.jpg",   // 4
+                            "http://i.imgur.com/rFFw9wr.jpg",   // 5
+                            "http://i.imgur.com/NFaaoME.jpg",   // 6
+                            "http://i.imgur.com/aTMfZdC.jpg",   // 7
+                            "http://i.imgur.com/VLwUBRI.jpg",   // 8
+                            "http://i.imgur.com/OQBfNAb.jpg",   // 9
+                            "http://i.imgur.com/T92u2Kh.jpg",   // 10
+                            "http://i.imgur.com/tgvJF7B.jpg",   // 11
+                            "http://i.imgur.com/4TvANFU.jpg",   // 12
+                            "http://i.imgur.com/DMQla5Z.jpg",   // 13
+                            "http://i.imgur.com/KVQJDui.jpg",   // 14
+                            "http://i.imgur.com/JqVV7Tk.jpg",   // 15
+                            "http://i.imgur.com/Dw5IBZP.jpg",   // 16
+                            "http://i.imgur.com/fJh6ORU.jpg",   // 17
+                            "http://i.imgur.com/VgLyPQ9.jpg",   // 18
+                            "http://i.imgur.com/A7tgoeJ.jpg",   // 19
+                    };
+                case text:
+                    return new String[]{
+                            "Here comes the judge in her big red hat. She has come to see the train show. Who will take the judge to the train show? " +
+                                    "Thomas will! Thomas will go. Thomas will take the judge to the show.", // 0
+                            "\"Hurry, Thomas! Take me to the show. Take me there fast. Go, train go!\" Clickety-clack, clickety-clack, up up the hill, " +
+                                    "Thomas the Tank Engine goes faster than fast.", // 1
+                            "Screech! go the brakes. Thomas goes so slow. Slow, slow, slower than slow he goes. " +
+                                    "\"Hurry Thomas! Why do you go so slow? Take me to the train show. Go, train, go!\"",   // 2
+                            "But Thomas cannot go. Thomas sees a goat. The goat is on the track. Peep! Peep! goes Thomas. Baaaa! The goat jumps back.", // 3
+                            "Clickety-clack, clickety-clack, down down the hill, Thomas the Tank Engine goes faster than fast.",    // 4
+                            "Screech! go the brakes. Thomas goes so slow. Slow, slow, slower than slow he goes. " +
+                                    "\"Hurry Thomas! Why do you go so slow? Take me to the train show. Go, train, go!\"",   // 5
+                            "The tunnel is so dark. Slow, slow, slow he goes into the dark, dark, dark tunnel... ... and out the other side!",  //6
+                            "Clickety-clack, clickety-clack, over a bridge. He was going so fast. He was going so fast, the judge lost her hat!",   // 7
+                            "Screech! go the brakes. Thomas goes so slow. Slow, slow, slower than slow he goes. " +
+                                    "\"Hurry Thomas! We're running late, you know. Take me to the train show. Go, train, go!\"",   // 8
+                            "But Thomas must go slow. There is a cow on the track. Moo! Moo! goes the cow. Peep! Peep! goes Thomas. " +
+                                    "The cow moves back. Clickety-clack, clickety-clack, Thomas the Tank Engine moves faster than fast!",   // 9
+                            "Screech! go the brakes. Thomas goes so slow. Slow, slow, slower than slow he goes. " +
+                                    "\"Don't stop, Thomas. Go, train, go! Don't stop now. I'm late for the show!",   // 10
+                            "But Thomas must go slow. There are logs on the track. The cran engine clears the logs. " +
+                                    "Clickety-clack, clickety-clack, around the logs goes Thomas faster than fast.",    // 11
+                            "There is mud up ahead! The judge wants to go slow. \"Slow, little engine. Slow, slow, slow. " +
+                                    "Watch out for the mud! Whoa, train, whoa!\"",  // 12
+                            "But Thomas cannot go slow. Thomas goes faster than fast. Into the mud... Splash! Splash!", // 13
+                            "Thomas goes fast. Past a town, fast, fast. Past a dog, faster still. Fast at last!",   // 14
+                            "Nothing can stop him, nothing at all. No goat. No dark. No cow. No log.",  // 15
+                            "No crane No mud. No town. No dog. The is the fastest that Thomas can go!", // 16
+                            "Screech! go the brakes. \"Good job, Thomas! We made it here at last! You are a little engine, but you go so fast!\"",  // 17
+                            "Here comes the judge! The train show begins. There are red trains and blue trains and old trains and new trains. " +
+                                    "And a little blue engine covered in mud. What will the judge say?",    // 18
+                            "\"I like all the trains. You all are such fun. But the muddy little blue train is my favorite one.\""  // 19
+                    };
+
+                default:
+                    return null;
+            }
+        }
+
+        public String getAuthor() {
+            return "Thomas and Friends";
+        }
     }
 
     public static class Template implements IBook {
@@ -381,6 +465,95 @@ public class Library {
             }
         }
 
+
+        public String getAuthor() {
+            return "nickelodeon";
+        }
+    }
+
+
+    public static class MarshallAndSkye implements IBook {
+        @Override
+        public String getTitle() {
+            return "Marshall and Skye";
+        }
+
+        @Override
+        public String getCoverUrl() {
+            return "http://i.imgur.com/hgzqlWR.jpg";
+        }
+
+        @Override
+        public String[] getPages(BookPageMediaType mediaType) {
+            switch (mediaType) {
+                case image:
+                    return new String[]{
+                            "http://i.imgur.com/mVqdYVR.jpg",
+                            "http://i.imgur.com/Ta0TV9K.jpg",
+                            "http://i.imgur.com/EZNWzB9.jpg",
+                            "http://i.imgur.com/8yFpEjg.jpg",
+                            "http://i.imgur.com/ijfg7FH.jpg"
+                    };
+
+                case text:
+                    return new String[]{
+                            "It's the day of Adventure Bay's big balloon race. Ryder will help Mayor Goodway fly her balloon. " +
+                                    "The pups get the balloon ready. Marshall checks the air tanks. Rocky patches a hole.",
+                            "Oh, no! Mayor Goodway's balloon accidentally lifts off. Marshall tries to stop it and gets pulled along for a ride!",
+                            "Skye soars to the rescue! \"This pup's got to fly!\" she says. Nice catch, Ryder!",
+                            "Now the team must help the mayor. Skye gives Ryder a lift! She carries him to the runaway balloon.",
+                            "Ryder helps the mayor pilot the balloon. The mayor wins the race! She gives her trophy to the PAW Patrol. " +
+                                    "\"Thanks,\" says Ryder. \"Whenever you're in trouble, just yelp for help!\""
+                    };
+
+                default:
+                    return null;
+            }
+        }
+
+
+        public String getAuthor() {
+            return "nickelodeon";
+        }
+    }
+
+    public static class PawPatrolRescueTeam implements IBook {
+        @Override
+        public String getTitle() {
+            return "PAW Patrol Rescue Team!";
+        }
+
+        @Override
+        public String getCoverUrl() {
+            return "http://i.imgur.com/lYJpXFk.jpg";
+        }
+
+        @Override
+        public String[] getPages(BookPageMediaType mediaType) {
+            switch (mediaType) {
+                case image:
+                    return new String[]{
+                            "http://i.imgur.com/xiTzzo3.jpg",
+                            "http://i.imgur.com/OaPplc5.jpg",
+                            "http://i.imgur.com/8TZEBMj.jpg",
+                            "http://i.imgur.com/nrgVWpw.jpg",
+                            "http://i.imgur.com/woahwhv.jpg"
+                    };
+                case text:
+                    return new String[]{
+                            "The PAW Patrol pups are best friends, who love working and playing together.",
+                            "When Ryder calls them to the Lookout, Marshall, Rubble, Chase, Rocky, Skye, and Zuma leap into action to help Adventure Bay.",
+                            "\"We have to save that kitten!\" Rubble exclaims. \"Don't worry! We've got you!\" Ryder says.",
+                            "When Farmer Yumi needs help collecting fruit before a big storm, the PAW Patrol is there to help. " +
+                                    "\"Great work, team,\" says Chase.",
+                            "The PAW Patrol finishes a busy Adventure Bay day with pup treats and sleep in front of the Lookout. " +
+                                    "Good friends make a great team!"
+                    };
+
+                default:
+                    return null;
+            }
+        }
 
         public String getAuthor() {
             return "nickelodeon";

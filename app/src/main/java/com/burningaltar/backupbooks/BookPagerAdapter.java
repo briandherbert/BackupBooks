@@ -85,10 +85,10 @@ public class BookPagerAdapter extends PagerAdapter {
 //                .into(target);
 
 
-        ViewGroup layout = (ViewGroup) mInflater.inflate(R.layout.book_page_item, parent, false);
+        ViewGroup layout = (ViewGroup) mInflater.inflate(R.layout.book_page_item2, parent, false);
         parent.addView(layout);
 
-        ImageLoaderLib.loadImage(layout, parent.getContext(), mUrls.get(position), mScreenSize.x, mScreenSize.y);
+        ImageLoaderLib.loadImage(layout, mUrls.get(position), mScreenSize.x, mScreenSize.y);
 
         return layout;
     }

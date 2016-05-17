@@ -7,15 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 
 /**
  * Created by bherbert on 5/9/16.
@@ -28,12 +21,14 @@ public class LibraryActivity extends AppCompatActivity implements CoversAdapter.
 
     ArrayList<String> mBookIds = new ArrayList<>();
 
-    static final int NUM_COLS = 2;
+    static int NUM_COLS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
+
+        NUM_COLS = getResources().getInteger(R.integer.num_cols);
 
         mAdapter = new CoversAdapter(this, this, NUM_COLS);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_covers);
@@ -46,11 +41,12 @@ public class LibraryActivity extends AppCompatActivity implements CoversAdapter.
         if (Constants.FETCH_FROM_FIREBASE) {
             FirebaseHelper.fetchBookIds(this);
         } else {
+            ArrayList<String> bookIds = new ArrayList<>();
             for (Library.IBook book : Library.BOOKS) {
-                mBookIds.add(Library.getBookId(book));
+                bookIds.add(Library.getBookId(book));
             }
 
-            onGotBookIds(mBookIds);
+            onGotBookIds(bookIds);
         }
     }
 
