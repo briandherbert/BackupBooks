@@ -176,14 +176,14 @@ public class ImageLoaderLib {
             ImgurImageSize enclosingSize = normal;
 
             for (ImgurImageSize size : ImgurImageSize.values()) {
-                if (maxSide < size.size) {
+                if (maxSide <= size.size) {
                     enclosingSize = size;
                 } else {
-                    return normal;
+                    return enclosingSize;
                 }
             }
 
-            return normal;
+            return enclosingSize;
         }
     }
 

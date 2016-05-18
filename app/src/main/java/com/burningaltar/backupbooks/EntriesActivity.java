@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class EntriesActivity extends AppCompatActivity {
     public static final String TAG = EntriesActivity.class.getSimpleName();
 
-    Firebase mFirebaseCatalogRef = new Firebase(FirebaseHelper.FIREBASE_ROOT + FirebaseHelper.FIREBASE_REF_BOOKS_APP);
+    DatabaseReference mFirebaseCatalogRef;
 
     Button mBtnSubmit;
     TextView mLblInfo;
@@ -31,6 +31,9 @@ public class EntriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mFirebaseCatalogRef = FirebaseHelper.getRootRef();
+
         setContentView(R.layout.activity_entries);
 
         mBtnSubmit = (Button) findViewById(R.id.btn_submit);
@@ -60,7 +63,7 @@ public class EntriesActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(DatabaseError firebaseError) {
                 Log.v(TAG, "failed to add new book");
             }
         });
@@ -70,7 +73,7 @@ public class EntriesActivity extends AppCompatActivity {
     }
 
     public void submitBookDetails() {
-        Firebase bookDetailsRef = mFirebaseCatalogRef.child(FirebaseHelper.CHILD_BOOKS).child(bookId);
+        DatabaseReference bookDetailsRef = mFirebaseCatalogRef.child(FirebaseHelper.CHILD_BOOKS).child(bookId);
         bookDetailsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,7 +81,7 @@ public class EntriesActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(DatabaseError firebaseError) {
                 Log.v(TAG, "failed to add new book");
             }
         });

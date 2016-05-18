@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,6 +24,9 @@ public class FirebaseHelper {
 
     static final String FIREBASE_ROOT = "https://crackling-fire-4753.firebaseio.com/";
     static final String FIREBASE_REF_BOOKS_APP = "backupbooks";
+
+    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+
 
     static final String CHILD_BOOK_DIRECTORY = "directory";
     static final String CHILD_BOOKS = "books";
@@ -44,10 +49,6 @@ public class FirebaseHelper {
 
     public static FirebaseHelper getInstance() {
         return mInstance;
-    }
-
-    public static Firebase getAppRef() {
-        return new Firebase(FirebaseHelper.FIREBASE_ROOT + FirebaseHelper.FIREBASE_REF_BOOKS_APP);
     }
 
     private static class FetchedBook implements Library.IBook {
@@ -77,9 +78,14 @@ public class FirebaseHelper {
         }
     }
 
+    public static DatabaseReference getRootRef() {
+        return FirebaseDatabase.getInstance().getReferenceFromUrl(FIREBASE_ROOT + "/" + FIREBASE_REF_BOOKS_APP);
+    }
+
     public static void fetchBook(final String bookId, @NonNull final BookFetcherListener listener) {
         Log.v(TAG, "Fetching book " + bookId);
-        Firebase bookRef = new Firebase(FirebaseHelper.FIREBASE_ROOT + FirebaseHelper.FIREBASE_REF_BOOKS_APP).child(FirebaseHelper.CHILD_BOOKS).child(bookId);
+        DatabaseReference bookRef = getRootRef().child(FirebaseHelper.CHILD_BOOKS).child(bookId);
+
         bookRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -104,7 +110,7 @@ public class FirebaseHelper {
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(DatabaseError databaseError) {
                 Log.v(TAG, "failed to get book data");
                 listener.onGotBook(null);
             }
@@ -113,8 +119,7 @@ public class FirebaseHelper {
 
     public static void fetchBookIds(@NonNull final LibraryFetcherListener listener) {
         Log.v(TAG, "Get all books");
-        Firebase firebaseCatalogRef = new Firebase(FirebaseHelper.FIREBASE_ROOT + FirebaseHelper.FIREBASE_REF_BOOKS_APP);
-        firebaseCatalogRef.addValueEventListener(new ValueEventListener() {
+        getRootRef().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.v(TAG, "Books list:\nData snapshot:" + dataSnapshot.getValue() + " type " + dataSnapshot.getValue().getClass());
@@ -128,7 +133,7 @@ public class FirebaseHelper {
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(DatabaseError firebaseError) {
                 listener.onGotBookIds(null);
             }
         });
