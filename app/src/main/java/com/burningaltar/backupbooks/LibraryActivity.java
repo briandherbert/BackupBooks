@@ -59,7 +59,11 @@ public class LibraryActivity extends AppCompatActivity implements CoversAdapter.
 
     @Override
     public void onGotBookIds(Collection<String> bookIds) {
-        mBookIds.addAll(bookIds);
-        mAdapter.add(mBookIds);
+        for (String id : bookIds) {
+            if (!mBookIds.contains(id)) {
+                mBookIds.addAll(bookIds);
+                mAdapter.add(mBookIds);
+            }
+        }
     }
 }

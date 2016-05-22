@@ -3,21 +3,17 @@ package com.burningaltar.backupbooks;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.facebook.common.logging.FLog;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.interfaces.DraweeHierarchy;
 import com.facebook.drawee.view.DraweeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
@@ -25,6 +21,7 @@ import com.facebook.imagepipeline.listener.RequestListener;
 import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -38,7 +35,8 @@ public class ImageLoaderLib {
 
     public enum ImageLoaderType {
         picasso,
-        fresco;
+        fresco,
+        ion;
     }
 
     private static ImageLoader sImageLoader = null;
@@ -53,6 +51,10 @@ public class ImageLoaderLib {
 
             case fresco:
                 sImageLoader = new FrescoImageLoader(context);
+                break;
+
+            case ion:
+                sImageLoader = new IonImageLoader(context);
         }
     }
 
@@ -80,14 +82,11 @@ public class ImageLoaderLib {
                     .setRequestListeners(requestListeners)
                     .build();
             Fresco.initialize(context, config);
-            FLog.setMinimumLoggingLevel(FLog.VERBOSE);
-
-            //Fresco.initialize(context);
+            //FLog.setMinimumLoggingLevel(FLog.VERBOSE);
         }
 
         @Override
         public void loadImage(ViewGroup parent, String url, int width, int height) {
-            Log.v("blarg", "load fresco image");
             View img = parent.getChildAt(0);
 
             if (img == null || !(img instanceof SimpleDraweeView)) {
@@ -156,27 +155,57 @@ public class ImageLoaderLib {
         }
     }
 
+    public static class IonImageLoader extends ImageLoader {
+        Context context;
+        public IonImageLoader(Context context) {
+            super(context);
+
+            this.context = context;
+        }
+
+        @Override
+        public void loadImage(ViewGroup parent, String url, int width, int height) {
+            View img = parent.getChildAt(0);
+
+            if (img == null || !(img instanceof ImageView)) {
+                parent.removeAllViews();
+
+                img = new ImageView(mContext);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                img.setLayoutParams(lp);
+                parent.addView(img);
+            }
+
+            Ion.with(context).load(url).intoImageView((ImageView) img);
+        }
+
+        @Override
+        public ImageLoaderType getType() {
+            return ImageLoaderType.picasso;
+        }
+    }
+
     enum ImgurImageSize {
-        normal("", 9999),
+        raw("", 9999),
         huge("h",1024),
         large("l", 640),
         medium("m", 320),
         small("t", 160);
 
-        public final int size;
+        public final int dimen;
         public final String suffix;
 
         ImgurImageSize(String suffix, int size) {
             this.suffix = suffix;
-            this.size = size;
+            this.dimen = size;
         }
 
         static ImgurImageSize getEnclosingSize(int maxSide) {
             boolean fits = false;
-            ImgurImageSize enclosingSize = normal;
+            ImgurImageSize enclosingSize = raw;
 
             for (ImgurImageSize size : ImgurImageSize.values()) {
-                if (maxSide <= size.size) {
+                if (maxSide <= size.dimen) {
                     enclosingSize = size;
                 } else {
                     return enclosingSize;
@@ -185,6 +214,29 @@ public class ImageLoaderLib {
 
             return enclosingSize;
         }
+    }
+
+    public static String getAdjustedImgurUrl(String url, int maxSide) {
+        if (!url.contains("i.imgur.com")) return url;
+
+        ImgurImageSize size = ImgurImageSize.getEnclosingSize(maxSide);
+
+        if (size == null) size = ImgurImageSize.raw;
+
+        // Restrict to large size; 1024 should be fine
+        if (size.dimen > Constants.MAX_IMGUR_SIZE.dimen) size = Constants.MAX_IMGUR_SIZE;
+
+        if (ImgurImageSize.raw != size) {
+            Log.v(TAG, "Adjusting url " + url + " for size " + size.name());
+
+            String end = url.substring(url.length() - 4);
+            url = url.substring(0, url.length() - 4);
+            url = url + size.suffix + end;
+
+            Log.v(TAG, "new url " + url);
+        }
+
+        return url;
     }
 
 
@@ -199,6 +251,8 @@ public class ImageLoaderLib {
      */
 
     public static void loadImage(ViewGroup parent, String url, int width, int height) {
+        url = getAdjustedImgurUrl(url, Math.max(width, height));
+
         sImageLoader.loadImage(parent, url, width, height);
     }
 }

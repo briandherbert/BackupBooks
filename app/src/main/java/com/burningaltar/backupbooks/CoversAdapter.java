@@ -63,7 +63,7 @@ public class CoversAdapter extends RecyclerView.Adapter<CoversAdapter.CoverHolde
 
     @Override
     public CoverHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.cover_item, parent, false);
+        View view = mInflater.inflate(R.layout.book_page_item2, parent, false);
         view.getLayoutParams().width = mItemSize;
         view.getLayoutParams().height = mItemSize;
 
@@ -81,33 +81,7 @@ public class CoversAdapter extends RecyclerView.Adapter<CoversAdapter.CoverHolde
 
     @Override
     public void onBindViewHolder(final CoverHolder holder, int position) {
-        Target target = new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        Log.v(TAG, "loaded bitmap, size " + bitmap.getWidth() + " by " + bitmap.getHeight());
-
-                        holder.img.setImageBitmap(bitmap);
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                        holder.img.setImageDrawable(errorDrawable);
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                };
-
-        holder.img.setTag(target);
-
-        mPicasso.load(mUrls.get(position))
-                .resize(mItemSize, mItemSize)
-                .centerInside()
-                .onlyScaleDown()
-                .error(new ColorDrawable(Color.RED))
-                .into(target);
+        ImageLoaderLib.loadImage(holder.viewGroup, mUrls.get(position), mItemSize, mItemSize);
     }
 
 
@@ -117,11 +91,10 @@ public class CoversAdapter extends RecyclerView.Adapter<CoversAdapter.CoverHolde
     }
 
     public static class CoverHolder extends RecyclerView.ViewHolder {
-        ImageView img;
-
+        ViewGroup viewGroup;
         public CoverHolder(View view) {
             super(view);
-            img = (ImageView) view.findViewById(R.id.img_cover);
+            viewGroup = (ViewGroup) view;
         }
     }
 

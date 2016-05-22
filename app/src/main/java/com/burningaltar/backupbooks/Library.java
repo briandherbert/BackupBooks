@@ -49,7 +49,8 @@ public class Library {
             new HandHandFingersThumb(),
             new MarshallAndSkye(),
             new PawPatrolRescueTeam(),
-            new ThomasGoTrainGo()
+            new ThomasGoTrainGo(),
+            new WinniePoohHoneyTree()
     };
 
     public static IBook getBook(String bookId) {
@@ -188,6 +189,89 @@ public class Library {
 
         public String getAuthor() {
             return "";
+        }
+    }
+
+
+
+    public static class WinniePoohHoneyTree implements IBook {
+        @Override
+        public String getTitle() {
+            return "Winnie the Pooh: The Honey Tree";
+        }
+
+        @Override
+        public String getCoverUrl() {
+            return "http://i.imgur.com/kHar68B.jpg";
+        }
+
+        @Override
+        public String[] getPages(BookPageMediaType mediaType) {
+            switch (mediaType) {
+                case image:
+                    return new String[]{
+                            "http://i.imgur.com/GhCiyMc.jpg",  // 1
+                            "http://i.imgur.com/nNI47pi.jpg",   // 2
+                            "http://i.imgur.com/nhj1YES.jpg",   // 3
+                            "http://i.imgur.com/3hVhYe9.jpg",   // 4
+                            "http://i.imgur.com/xs8xIjb.jpg",   // 5
+                            "http://i.imgur.com/4x86nOu.jpg",   // 6
+                            "http://i.imgur.com/8zogbiY.jpg",   // 7
+                            "http://i.imgur.com/tLkT8k0.jpg",   // 8
+                            "http://i.imgur.com/i8yqvTZ.jpg",   // 9
+                            "http://i.imgur.com/cb1OtgT.jpg",   // 10
+                            "http://i.imgur.com/XOGejvX.jpg",   // 11
+                            "http://i.imgur.com/AO8Scwk.jpg",   // 12
+                    };
+                case text:
+                    return new String[]{
+                            "Once upon a time, a very long time ago now, about last Friday, Winnie-the-Pooh lived in a forest all by himself under the name of Sanders. " +
+                                    "That means that he had the name over the door in gold letters, and lived under it",    // 1
+                            "One day when he was out walking, he came to an open place in the middle of the forest, and in the middle of this place was a large oak tree, and, from the top of the tree, there came a loud buzzing noise. " +
+                                    "Winnie the Pooh sat down at the foot of the tree, put his head between his paws, and began to think. First of all he said to himself: " +
+                                    "\"That buzzing noise means something. You don't get a buzzing noise like that, just buzzing and buzzing, without it's meaning something. If there's a buzzing noise, somebody's making a buzzing noise, " +
+                                    "and the only reason for making a buzzing noise that I know of is because you're a bee.\" Then he thought another long time, and said: \"And the only reason for being a bee that I know of is making honey.\" " +
+                                    "And then he got up, and said: \"And the only reason for making honey is so I can eat it.\" So he began to climb the tree.",    // 2
+                            "He climbed and he climbed and he climbed, and as he climbed he sang a little song to himself. It went like this: Isn't it funny, how a bear likes honey? Buzz! Buzz! Buzz! I wonder why he does? " +
+                                    "Then he climbed a little further, and a little further, and then just a little further. By that time he had thought of another song. " +
+                                    "It's a very funny thought that, if bears were bees, they'd build their nests at the bottom of trees. And that being so (if the bees were bears), we shouldn't have to climb up all these stairs. " +
+                                    "He was getting rather tired by this time, so that is why he sang a complaining song. He was nearly there now, and if he just stood on that branch... " +
+                                    "Crack! \"Oh, help!\" said Pooh, as he dropped ten feet on the branch below him. \"If only I hadn't— \" he said, as he bounced twenty feet on to the next branch.", // 3
+                            "\"You see, what I meant to do,\" he explained, as he turned head-over-heels, and crashed on to another branch thirty feet below, \"what I meant to do— , Of course, it was rather— \" he admitted, as he slithered very quickly through the next six branches. " +
+                                    "\"It all comes, I suppose,\" he decided, as he said goodbye to the last branch, spun round three times, and flew gracefully into a gorse bush, \"it all comes of liking honey so much. Oh, help!\" " +
+                                    "He crawled out of the gorse bush, brushed the prickles from his nose, and began to think again. And the first person he thought of was Christopher Robin.",    // 4
+                            "So Winnie-the-Pooh went round to his friend Christopher Robin, who lived behind a green door in another part of the forest. \"Good morning, Christopher Robin,\" he said. \"Good morning, Winnie-the-Pooh,\" said Christopher Robin. \"I wonder if you've got such a thing as a balloon about you?\" " +
+                                    "\"A balloon?\" \"Yes, I just said to myself coming along: \"I wonder if Christopher Robin has such a thing as a balloon about him?' I just said it to myself, thinking of balloons, and wondering.\" \"What do you want a balloon for?\" said Christopher Robin. " +
+                                    "Winnie-the-Pooh looked round to see that nobody was listening, put his paw to his mouth, and said in a deep whisper: \"Honey!\" \"But you don't get honey with balloons!\" \"I do,\" said Pooh. Well it just happened that Christopher Robin had been to a party the day before at the house of his friend Piglet, and they had balloons at the party. " +
+                                    "Christopher Robin had had a big green balloon; and one of Rabbit's relations had had a big blue one, and had left it behind, being really too young to go to a party at all; and so Christopher Robin had brought the green one and the blue one home with him.",     // 5
+                            "\"Which one would you like?\" he asked Pooh. Pooh put his head between his paws and thought very carefully. \"It's like this,\" he said. \"When you go after honey with a balloon, the great thing is not to let the bees know you're coming. " +
+                                    "Now, if you have a green balloon, they might think you were only part of the tree, and not notice you, and if you have a blue balloon, they might think you were only part of the sky, and not notice you, and the question is: Which is most likely?\" " +
+                                    "\"Wouldn't they notice you underneath the balloon?\" asked Christopher Robin. \"They might or they might not,\" said Winnie-the-Pooh. \"You never can tell with bees.\" He thought for a moment and said: \"I shall try to look like a small black cloud. That will deceive them.\" " +
+                                    "\"Then you had better have the blue balloon,\" said Christopher Robin; and so it was decided. ",   // 6
+                            "Well, they both went out with the blue balloon, and Christopher Robin took his gun with him, just in case, as he always did,. and Winnie-the-Pooh went to a very muddy place that he knew of, and rolled and rolled until he was black all over; and then, when the balloon was blown up as big as big, and Christopher Robin and Pooh were both holding on to the string, Christopher Robin let go suddenly, and Pooh Bear floated gracefully up into the sky, and stayed there-level with the top of the tree and about twenty feet away from it. " +
+                                    "\"Hooray!\" shouted Christopher Robin. \"Isn't that fine?\" shouted Winnie-the-Pooh down to him. \"What do I look like?\" \"You look like a Bear holding on to a balloon,\" said Christopher Robin. \"Not,\" said Pooh anxiously, \"-not like a small black cloud in a blue sky?\" \"Not very much.\" " +
+                                    "\"Ah, well, perhaps from up here it looks different. And, as I say, you never can tell with bees.\" ", // 7
+                            "There was no wind to blow him nearer to the tree, so there he stayed. He could see the honey, he could smell the honey, but he couldn't quite reach the honey. After a little while he called down. \"Christopher Robin!\" he said in loud whisper. \"Hallo!\" \"I think the bees suspect something!\" \"What sort of thing?\" \"I don't know. But something tells me that they're suspicious!\" " +
+                                    "\"Perhpas they think that you're after their honey.\" \"It may be that. You never can tell with bees.\" There was another little silence, and then he called down again, \"Christopher Robin!\" \"Yes?\" \"Have you an umbrella in your house?\" \"I think so.\" \"I wish you would bring it out here, and walk up and down with it, and look up at me every now and then, and say 'Tut-tut, it looks like rain.' " +
+                                    "I think, if you did that, it would help the deception which we are practising on these bees.\" Well, Christoper Robin laughed to himself, \"Silly old Bear!\" but he didn't say it aloud because he was so fond of Pooh, and he went home for his umbrella. ",  // 8
+                            "\"Oh, there you are!\" called down Winnie-the-Pooh, as soon as Christopher Robin got back to the tree. \"I was beginning to get anxious. I have discovered that the bees are now definitely Suspicious.\" \"Shall I put my umbrella up?\" said Christopher Robin. \"Yes, but wait a moment. We must be practical. The important bee to deceive is the Queen bee. Can you see which is the Queen Bee from down there?\" \"No.\" " +
+                                    "\"A pity. Well, now, if you walk up and down with your umbrella, saying, 'Tut-tut, it looks like rain,' I shall do what I can by singing a little Cloud Song, such as a cloud might sing ... Go!\" So, while Christopher Robin walked up and down and wondered if it would rain, Winnie-the-Pooh sang this song: How sweet to be a cloud Floating in the Blue! Every little cloud Always sings aloud. " +
+                                    "\"How sweet to be a Cloud Floating in the Blue!\" It makes him very proud To be a little cloud. ", // 9
+                            "The bees were still buzzing as suspiciously as ever. Some of them, indeed, left their nest and flew all round the cloud as it began the second verse of this song, and one bee sat down on the nose of the cloud for a moment, and then got up again. \"Christopher-ow!-Robin,\" called out the cloud. \"Yes?\" \"I have just been thinking, and I have come to a very important decision. These are the wrong sort of bees.\" " +
+                                    "\"Are they?\" \"Quite the wrong sort. So I should think they would make the wrong sort of honey, shouldn't you?\" \"Would they?\" \"Yes. So I think I shall come down.\" \"How?\" asked Christopher Robin. Winnie-the-Pooh hadn't thought about this. If he let go of the string, he would fall-bump-and he didn't like the idea of that. So he thought for along time, and then he said, ",   // 10
+                            "\"Christopher Robin, you must shoot the balloon with your gun. Have you got your gun?\" \"Of course I have,\" said Christopher Robin. \"But if I do that, it will spoil the balloon.\" \"But if you don't,\" said Pooh, \"I shall have to let go, and that would spoil me.\" When he put it like this, Christopher Robin saw how it was, and he aimed very carefully at the balloon, and fired. " +
+                                    "\"Ow!\" said Pooh. \"Did I miss?\" asked Christopher Robin. \"You didn't exactly miss,\" said Pooh, \"but you missed the balloon.\" \"I'm so sorry,\" said Christopher Robin, and he fired again, and this time he hit the balloon, and the air came slowly out, and Winnie-the-Pooh floated down to the ground.", // 11
+                            "But his arms were so stiff from holding on to the string of the balloon all that time that they stayed up straight in the air for more than a week, and whenever a fly came and settled on his nose he had to blow it off. And I think-but I am not sure-that that is why he was always called Pooh."  // 12
+
+                    };
+
+                default:
+                    return null;
+            }
+        }
+
+        public String getAuthor() {
+            return "A. A. Milne";
         }
     }
 

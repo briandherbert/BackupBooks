@@ -24,7 +24,7 @@ public class EntriesActivity extends AppCompatActivity {
     TextView mLblInfo;
 
     // SUPER DUPER IMPORTANT
-    final Library.IBook book = new Library.ThomasGoTrainGo();
+    final Library.IBook book = new Library.WinniePoohHoneyTree();
 
     final String bookId = Library.getBookId(book);
 
