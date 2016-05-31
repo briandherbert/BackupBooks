@@ -1,5 +1,6 @@
 package com.burningaltar.backupbooks;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,7 +14,7 @@ import java.util.Collection;
 /**
  * Created by bherbert on 5/9/16.
  */
-public class LibraryActivity extends AppCompatActivity implements CoversAdapter.Listener, FirebaseHelper.LibraryFetcherListener {
+public class LibraryActivity extends Activity implements CoversAdapter.Listener, FirebaseHelper.LibraryFetcherListener {
     public static final String TAG = LibraryActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
 
@@ -26,6 +27,7 @@ public class LibraryActivity extends AppCompatActivity implements CoversAdapter.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_library);
 
         NUM_COLS = getResources().getInteger(R.integer.num_cols);

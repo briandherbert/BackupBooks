@@ -50,7 +50,9 @@ public class Library {
             new MarshallAndSkye(),
             new PawPatrolRescueTeam(),
             new ThomasGoTrainGo(),
-            new WinniePoohHoneyTree()
+            new WinniePoohHoneyTree(),
+            new TMNTFollowNinja(),
+            new WebpExample()
     };
 
     public static IBook getBook(String bookId) {
@@ -76,6 +78,166 @@ public class Library {
 
         String getAuthor();
     }
+
+
+    public static class Template implements IBook {
+        @Override
+        public String getTitle() {
+            return "";
+        }
+
+        @Override
+        public String getCoverUrl() {
+            return "";
+        }
+
+        @Override
+        public String[] getPages(BookPageMediaType mediaType) {
+            switch (mediaType) {
+                case image:
+                    return new String[]{
+                            "", // 1
+                            "", // 2
+                            "", // 3
+                            "", // 4
+                            "", // 5
+                            "", // 6
+                            "", // 7
+                            "", // 8
+                            "", // 9
+                            "", // 10
+                            "", // 11
+                            "", // 12
+                            "", // 13
+                    };
+                case text:
+                    return new String[]{
+                            "", // 1
+                            "", // 2
+                            "", // 3
+                            "", // 4
+                            "", // 5
+                            "", // 6
+                            "", // 7
+                            "", // 8
+                            "", // 9
+                            "", // 10
+                            "", // 11
+                            "", // 12
+                            "", // 13
+                    };
+
+                default:
+                    return null;
+            }
+        }
+
+        public String getAuthor() {
+            return "";
+        }
+    }
+
+
+
+
+    public static class WebpExample implements IBook {
+        @Override
+        public String getTitle() {
+            return "webp";
+        }
+
+        @Override
+        public String getCoverUrl() {
+            return "http://www.gstatic.com/webp/gallery/1.webp";
+        }
+
+        @Override
+        public String[] getPages(BookPageMediaType mediaType) {
+            switch (mediaType) {
+                case image:
+                    return new String[]{
+                            "http://www.gstatic.com/webp/gallery/2.webp",
+                            "http://www.gstatic.com/webp/gallery/3.webp"
+                    };
+                case text:
+                    return new String[]{
+                            "one",
+                            "two"
+                    };
+
+                default:
+                    return null;
+            }
+        }
+
+        public String getAuthor() {
+            return "";
+        }
+    }
+
+    public static class TMNTFollowNinja implements IBook {
+        @Override
+        public String getTitle() {
+            return "Teenage Mutant Ninja Turtles: Follow the Ninja";
+        }
+
+        @Override
+        public String getCoverUrl() {
+            return "http://i.imgur.com/L9sdHdW.jpg";
+        }
+
+        @Override
+        public String[] getPages(BookPageMediaType mediaType) {
+            switch (mediaType) {
+                case image:
+                    return new String[]{
+                            "http://i.imgur.com/ttUVGvJ.jpg",   // 1
+                            "http://i.imgur.com/ZIW55oh.jpg",   // 2
+                            "http://i.imgur.com/GdvBvZE.jpg", // 3
+                            "http://i.imgur.com/aQSHWZE.jpg", // 4
+                            "http://i.imgur.com/AGpjiRI.jpg", // 5
+                            "http://i.imgur.com/GaP9QT9.jpg", // 6
+                            "http://i.imgur.com/1slwuy3.jpg", // 7
+                            "http://i.imgur.com/KnzlFaU.jpg", // 8
+                            "http://i.imgur.com/qvGK9hu.jpg", // 9
+                            "http://i.imgur.com/NOFxLcd.jpg", // 10
+                            "http://i.imgur.com/WjAxge9.jpg", // 11
+                            "http://i.imgur.com/FP2M3yW.jpg", // 12
+                    };
+                case text:
+                    return new String[]{
+                            "The Teenage Mutant Ninja Turtles were on patrol. They had been looking for mutagen containers all night, but they hadn’t found any. \"I’m so bored,\" Mikey whined.",
+                            "\"Let’s take a break and do something fun,\" suggested Leo, the Turtles’ leader. \"Awesome!\" his brothers cheered. \"It’s time for a training session!\" Leo exclaimed. \"Awww,\" Raph, Donnie, and Mikey moaned. Ninja exercises didn’t sound like fun to them.",    // 2
+                            "Leo had an idea to make training exciting. \"We'll play King of the Mountain,\" he said, jumping to the top of Dragon Gate. \"I'll stand opp here, and you try to get past me using ninja skills.\" \n" +
+                                    "\"Sounds great,\" Raph said. He whispered a secret plan to Mikey and Donnie.", // 3
+                            "Mikey went first. He put` on his headphones, then flipped, spun, and danced right past Leo. \"Ninjas don't do that!\" Leo protested. Donnie calculated a sneaky way to throw his ninja starts. They bounced and skipped off buildings— right toward Leo. Leo ducked, and when he looked up, Donnie was behind him.", // 4
+                            "Raph threw his sai straight at Leo. As Leo dodged it, Raph jumped past him. \"That's not fair!\" Leo shouted. Leo was really mad. \"You guys never take my orders seriously.\"\n" +
+                                    "\"Well, you always want us to fight just like you,\" Raph replied as he, Donnie, and Mikey marched away.", // 5
+                            "Back at the lair, Leo spoke to his teacher, Splinter. \"Maybe I'm not cut out to be a leader,\" he said.\n" +
+                                    "\"A true ninja must be unpredictable,\" Splinter said. \"And a true leader doesn't always tell his followers what to do.", // 6
+                            "The next night, the Turtles went out again. Suddenly, Karai jumped from the shadows. She was a very dangerous ninja— and she wasn't alone. An army of ninja robots stodd behind her! \"My Footbots are programmed to know every ninja move,\" she said. \"You can't beat them!\"", // 7
+                            "Karai commanded the Footbots to capture the Turtles. The bots charged, and the battle began. The Footbots ducked the Turtles' punches. They blocked the Turtles' kicks. The Turtles couldn't stop them.", // 8
+                            "Leo was sure the Turtles would lose this fight... until he remembered Splinter's words: A true ninja must be unpredictable.\n" +
+                                    "\"You can't program a ninja,\" Leo said. Then he yelled to his brothers. \"Do you remember Kind of the Mountain? Show these bots your original ninja moves!\"", // 9
+                            "The Footbots weren't programmed to deal with Mikey's dancing. Donnie was too sneaky for them. And Raph's power put the bots on the run!", // 10
+                            "\"That's the most fun I've ever had following your orders!\" Raph exclaimed.\n" +
+                                    "\"That's the most fun I've had giving them,\" Leo replied.\n" +
+                                    "Mikey threw a smoke bomb, and the Turtles vanished into a pruple cloud.", // 11
+                            "Back at their lair, the Turtles were ready to relax. \"Who wants to play King of the Mountain?\" Leo joked.\n" +
+                                    "\"I'd rather play Follow the Leader,\" Raph said with a smile.", // 12
+                    };
+
+                default:
+                    return null;
+            }
+        }
+
+        public String getAuthor() {
+            return "nickelodeon";
+        }
+    }
+
+
 
     public static class ThomasGoTrainGo implements IBook {
         @Override
@@ -157,42 +319,6 @@ public class Library {
             return "Thomas and Friends";
         }
     }
-
-    public static class Template implements IBook {
-        @Override
-        public String getTitle() {
-            return "";
-        }
-
-        @Override
-        public String getCoverUrl() {
-            return "";
-        }
-
-        @Override
-        public String[] getPages(BookPageMediaType mediaType) {
-            switch (mediaType) {
-                case image:
-                    return new String[]{
-                            ""
-                    };
-                case text:
-                    return new String[]{
-                            "",
-                            ""
-                    };
-
-                default:
-                    return null;
-            }
-        }
-
-        public String getAuthor() {
-            return "";
-        }
-    }
-
-
 
     public static class WinniePoohHoneyTree implements IBook {
         @Override

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,9 +25,6 @@ public class FirebaseHelper {
 
     static final String FIREBASE_ROOT = "https://crackling-fire-4753.firebaseio.com/";
     static final String FIREBASE_REF_BOOKS_APP = "backupbooks";
-
-    DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-
 
     static final String CHILD_BOOK_DIRECTORY = "directory";
     static final String CHILD_BOOKS = "books";

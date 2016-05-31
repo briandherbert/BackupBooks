@@ -25,6 +25,8 @@ public class BookPagerAdapter extends PagerAdapter {
 
     final Point mScreenSize = new Point();
 
+    final Activity mActivity;
+
     public BookPagerAdapter(Activity context, List<String> urls) {
         this.mUrls = urls;
 
@@ -33,20 +35,36 @@ public class BookPagerAdapter extends PagerAdapter {
         Display display = context.getWindowManager().getDefaultDisplay();
         display.getSize(mScreenSize);
 
+        mActivity = context;
         Log.v(TAG, "screen size " + mScreenSize);
     }
 
     @Override
     public int getCount() {
-        return mUrls.size();
+        return mUrls.size() + 1;
     }
 
     @Override
     public Object instantiateItem(ViewGroup parent, final int position) {
-        ViewGroup layout = (ViewGroup) mInflater.inflate(R.layout.book_page_item2, parent, false);
-        parent.addView(layout);
+        ViewGroup layout = null;
 
-        ImageLoaderLib.loadImage(layout, mUrls.get(position), mScreenSize.x, mScreenSize.y);
+        if (position >= mUrls.size()) {
+            layout = (ViewGroup) mInflater.inflate(R.layout.book_end_page, parent, false);
+            parent.addView(layout);
+
+            layout.findViewById(R.id.btn_home).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mActivity != null) mActivity.finish();
+                }
+            });
+
+        } else {
+            layout = (ViewGroup) mInflater.inflate(R.layout.book_page_item2, parent, false);
+            parent.addView(layout);
+
+            ImageLoaderLib.loadImage(layout, mUrls.get(position), mScreenSize.x, mScreenSize.y);
+        }
 
         return layout;
     }

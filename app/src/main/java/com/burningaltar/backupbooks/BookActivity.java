@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Arrays;
 /**
  * Created by bherbert on 5/9/16.
@@ -77,6 +79,7 @@ public class BookActivity extends Activity implements FirebaseHelper.BookFetcher
             tts = new TextToSpeech(BookActivity.this, new TextToSpeech.OnInitListener() {
                 @Override
                 public void onInit(int status) {
+                    tts.setSpeechRate(0.8f);
                     mCanReadAloud = true;
                 }
             });
@@ -95,13 +98,17 @@ public class BookActivity extends Activity implements FirebaseHelper.BookFetcher
             Log.v(TAG, "Clicked to listen");
             int idx = mPager.getCurrentItem();
 
+            String text = "";
             if (mPageTexts != null && mPageTexts.length > idx) {
                 Log.v(TAG, "Listening");
 
-                String text = mPageTexts[idx];
-                if (tts != null && text != null && !text.isEmpty()) {
-                    tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-                }
+                text = mPageTexts[idx];
+            } else if (idx == mPageTexts.length) {
+                text = getString(R.string.the_end);
+            }
+
+            if (tts != null && text != null && !text.isEmpty()) {
+                tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
             }
         }
     };

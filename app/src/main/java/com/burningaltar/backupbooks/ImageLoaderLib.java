@@ -1,6 +1,7 @@
 package com.burningaltar.backupbooks;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import com.facebook.imagepipeline.listener.RequestLoggingListener;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.bitmap.Transform;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
@@ -176,6 +178,19 @@ public class ImageLoaderLib {
                 parent.addView(img);
             }
 
+            Transform xform = new Transform() {
+                @Override
+                public Bitmap transform(Bitmap b) {
+                    Log.v("blarg", "got bmp, size " + b.getWidth() + " ," + b.getHeight());
+                    return b;
+                }
+
+                @Override
+                public String key() {
+                    return null;
+                }
+            };
+
             Ion.with(context).load(url).intoImageView((ImageView) img);
         }
 
@@ -227,13 +242,9 @@ public class ImageLoaderLib {
         if (size.dimen > Constants.MAX_IMGUR_SIZE.dimen) size = Constants.MAX_IMGUR_SIZE;
 
         if (ImgurImageSize.raw != size) {
-            Log.v(TAG, "Adjusting url " + url + " for size " + size.name());
-
             String end = url.substring(url.length() - 4);
             url = url.substring(0, url.length() - 4);
             url = url + size.suffix + end;
-
-            Log.v(TAG, "new url " + url);
         }
 
         return url;
